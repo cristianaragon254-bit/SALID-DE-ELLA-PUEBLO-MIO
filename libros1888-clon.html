@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Libros 1888</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8d08a;
+      --dark: #0f0d09;
+      --bg: #12100c;
+      --surface: #1c1a14;
+      --surface2: #252218;
+      --text: #e8e0cc;
+      --text-dim: #a89a7a;
+      --border: #3a3220;
+    }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.4;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .site-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, #a07830 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.4rem;
+    }
+
+    .site-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1rem;
+    }
+
+    .nav-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.15rem;
+      padding: 0.6rem 0;
+    }
+
+    nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 0.45rem 0.9rem;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+      border-color: var(--border);
+      background: rgba(201, 168, 76, 0.06);
+    }
+
+    .nav-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0.2rem 0;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    /* ── QUOTE BLOCK ── */
+    .quote-section {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2.5rem;
+      align-items: start;
+      margin-bottom: 3.5rem;
+      padding: 2.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      position: relative;
+    }
+
+    .quote-section::before {
+      content: '\201C';
+      font-family: 'Cinzel', serif;
+      font-size: 6rem;
+      color: var(--gold);
+      opacity: 0.15;
+      position: absolute;
+      top: -0.8rem;
+      left: 1.2rem;
+      line-height: 1;
+    }
+
+    .quote-text {
+      font-size: 1.08rem;
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    .quote-source {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      font-style: italic;
+      margin-top: 1rem;
+      text-align: right;
+    }
+
+    .video-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .video-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .video-btn:hover .video-icon {
+      background: rgba(201,168,76,0.2);
+      box-shadow: 0 0 20px rgba(201,168,76,0.2);
+      transform: scale(1.05);
+    }
+
+    .video-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--gold);
+      margin-left: 3px;
+    }
+
+    .video-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* ── SECTION HEADING ── */
+    .section-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-heading::before,
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border));
+    }
+
+    .section-heading::after {
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ── LINKS GRID ── */
+    .links-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .link-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--text-dim);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      padding: 0.55rem 1.2rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 2px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .link-card:hover {
+      color: var(--gold-light);
+      border-color: rgba(201,168,76,0.4);
+      transform: translateY(-1px);
+    }
+
+    .link-card:hover::before { opacity: 1; }
+
+    .link-card.highlight {
+      border-color: rgba(201,168,76,0.3);
+      color: var(--gold);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-mirror {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .footer-mirror a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .footer-mirror a:hover { text-decoration: underline; }
+
+    .footer-spinoza {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      font-style: italic;
+      max-width: 360px;
+      text-align: right;
+    }
+
+    .footer-spinoza span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--gold);
+      font-style: normal;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+
+    /* ── ORNAMENT ── */
+    .ornament {
+      text-align: center;
+      color: var(--gold);
+      opacity: 0.3;
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+      margin: 2rem 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .quote-section {
+        grid-template-columns: 1fr;
+        padding: 1.8rem 1.5rem;
+      }
+      .video-btn { flex-direction: row; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+      .footer-spinoza { text-align: center; }
+    }
+
+    /* ── FADE IN ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header  { animation: fadeUp 0.6s ease both; }
+    main    { animation: fadeUp 0.7s ease both 0.1s; }
+    footer  { animation: fadeUp 0.6s ease both 0.2s; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1 class="site-title">Libros 1888</h1>
+    <p class="site-subtitle">El mensaje de la justicia de Cristo</p>
+  </header>
+
+  <!-- TOP NAV -->
+  <nav>
+    <div class="nav-row">
+      <a href="https://www.libros1888.com/Pdfs/introd.pdf">Introducción</a>
+      <a href="https://www.libros1888.com/adv.htm" class="highlight">Descarga</a>
+      <a href="https://www.libros1888.com/mdv.htm">Migajas de Vida</a>
+      <a href="https://www.libros1888.com/materialesEGW-1888.htm">EGW Mat. 1888</a>
+      <a href="https://www.libros1888.com/1888link.htm">Enlaces</a>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-row">
+      <a href="https://www.libros1888.com/historia.htm">Historia</a>
+      <a href="https://www.libros1888.com/obj1888.htm">Objeciones</a>
+      <a href="https://www.libros1888.com/atj1893.htm">GCB 1893 (ATJ)</a>
+      <a href="https://www.libros1888.com/atj1895.htm">GCB 1895 (ATJ)</a>
+      <a href="https://www.libros1888.com/atj1897.htm">GCB 1897 (ATJ)</a>
+      <a href="https://www.libros1888.com/nuevo.htm">Nuevo</a>
+      <a href="https://www.libros1888.com/pactoeterno.htm">Pacto Eterno (EJW)</a>
+      <a href="https://www.libros1888.com/BN_audio.html">Audio</a>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-row">
+      <a href="https://www.libros1888.com/eb.htm">Estudios Bíblicos</a>
+      <a href="https://www.libros1888.com/pred-fav.htm">Predicaciones</a>
+      <a href="https://www.libros1888.com/Pdfs/guia.pdf">Guía</a>
+      <a href="https://www.libros1888.com/NCR.htm">Humanidad de Cristo</a>
+      <a href="https://www.libros1888.com/emergente.htm">Iglesia Emergente</a>
+      <a href="https://www.libros1888.com/correo.htm">Escríbenos</a>
+      <a href="https://www.libros1888.com/vid.htm">Vídeos</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <!-- QUOTE SECTION -->
+    <section class="quote-section">
+      <div>
+        <p class="quote-text">
+          En su gran misericordia el Señor envió un preciosísimo mensaje a su pueblo por medio de los
+          pastores Waggoner y Jones. Este mensaje tenía que presentar en forma más destacada ante el mundo
+          al sublime Salvador, el sacrificio por los pecados del mundo entero. Presentaba la justificación
+          por la fe en el Garante; invitaba a la gente a recibir la justicia de Cristo, que se manifiesta
+          en la obediencia a todos los mandamientos de Dios. Muchos habían perdido de vista a Jesús.
+          <br><br>
+          Necesitaban dirigir sus ojos a su divina persona, a sus méritos, a su amor inalterable por la
+          familia humana. Todo el poder es colocado en sus manos, y él puede dispensar ricos dones a los
+          hombres, impartiendo el inapreciable don de su propia justicia al desvalido agente humano. Este
+          es el mensaje que Dios ordenó que fuera dado al mundo. Es el mensaje del tercer ángel, que ha de
+          ser proclamado en alta voz y acompañado por el abundante derramamiento de su Espíritu.
+        </p>
+        <p class="quote-source">— <em>TM</em> 91, Elena G. de White</p>
+      </div>
+      <a href="https://youtu.be/8RyBbDzy3Ck" target="_blank" class="video-btn" title="El mensaje en 1 minuto (vídeo)">
+        <div class="video-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <span class="video-label">El mensaje<br>en 1 minuto</span>
+      </a>
+    </section>
+
+    <!-- SECONDARY LINKS -->
+    <p class="section-heading">Recursos adicionales</p>
+    <div class="links-grid">
+      <a class="link-card highlight" href="https://www.libros1888.com/historia.htm">Historia</a>
+      <a class="link-card" href="https://www.libros1888.com/obj1888.htm">Objeciones</a>
+      <a class="link-card" href="https://www.libros1888.com/atj1893.htm">GCB 1893 (ATJ)</a>
+      <a class="link-card" href="https://www.libros1888.com/atj1895.htm">GCB 1895 (ATJ)</a>
+      <a class="link-card" href="https://www.libros1888.com/atj1897.htm">GCB 1897 (ATJ)</a>
+      <a class="link-card highlight" href="https://www.libros1888.com/nuevo.htm">Nuevo</a>
+      <a class="link-card" href="https://www.libros1888.com/pactoeterno.htm">Pacto Eterno (EJW)</a>
+      <a class="link-card" href="https://www.libros1888.com/BN_audio.html">Audio</a>
+      <a class="link-card" href="https://www.libros1888.com/eb.htm">Estudios Bíblicos</a>
+      <a class="link-card" href="https://www.libros1888.com/pred-fav.htm">Predicaciones</a>
+      <a class="link-card" href="https://www.libros1888.com/Pdfs/guia.pdf">Guía (PDF)</a>
+      <a class="link-card" href="https://www.libros1888.com/NCR.htm">Humanidad de Cristo</a>
+      <a class="link-card" href="https://www.libros1888.com/emergente.htm">Iglesia Emergente</a>
+      <a class="link-card" href="https://www.libros1888.com/correo.htm">Escríbenos</a>
+      <a class="link-card" href="https://www.libros1888.com/vid.htm">Vídeos</a>
+    </div>
+
+    <div class="ornament">— ✦ —</div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-mirror">
+        También en
+        <a href="http://www.libros1888.com">www.libros1888.com</a>
+        &nbsp;·&nbsp;
+        <a href="http://www.libros1888.org">www.libros1888.org</a>
+      </p>
+      <p class="footer-spinoza">
+        "Si no quieres repetir el pasado, estúdialo"
+        <span>— Baruch Spinoza</span>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
